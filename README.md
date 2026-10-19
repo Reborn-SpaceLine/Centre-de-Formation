@@ -1,78 +1,35 @@
-# React + TypeScript + Vite
+# IFP Multimédia — Fondation Francis Ngannou
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Site vitrine de l'**Institut de Formation Professionnelle Multimédia** de la Fondation Francis Ngannou (Mairie de Batié, Région de l'Ouest, Cameroun) : inscriptions à la 8ème session (rentrée le Lundi 11 Janvier 2027), formations 100% gratuites, attestations agréées MINEFOP.
 
-Currently, two official plugins are available:
+## Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- React 19 + TypeScript + Vite 8 (React Compiler activé)
+- React Router 7 (4 pages : Accueil, Formations, Inscription, Contact)
+- CSS vanilla (`src/index.css`), Material Symbols + polices Google
 
-## React Compiler
-
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
-
-Note: This will impact Vite dev & build performances.
-You can also try [the experimental native React Compiler support in plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md#rust-react-compiler) by using `compiler: true` in the plugin options instead of using the Babel plugin.
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Structure
 
 ```
-
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+src/
+  lib/site.ts        # Coordonnées, session, rentrée, liens WhatsApp/Mail — source unique
+  data/programs.ts   # Les 5 filières (modules, logiciels, débouchés, durée)
+  components/        # Layout (topbar/footer), VideoModal
+  pages/             # Accueil, Formations, Inscription, Contact
 ```
+
+Les dates de session/rentrée se changent en un seul endroit : `src/lib/site.ts` (`session`, `rentree`).
+
+## Développement
+
+```bash
+npm install
+npm run dev      # http://localhost:5173
+npm run build    # tsc -b && vite build -> dist/
+npm run lint
+```
+
+## Déploiement
+
+Le build statique (`dist/`) peut être hébergé sur GitHub Pages, Netlify ou tout hébergeur
+statique. Prévoir une règle de réécriture `/ → /index.html` pour les routes du router.
