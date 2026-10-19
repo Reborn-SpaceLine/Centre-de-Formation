@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import VideoModal from '../components/VideoModal'
 import { PROGRAMS } from '../data/programs'
-import { SITE } from '../lib/site'
+import { SITE, WHATSAPP_URL } from '../lib/site'
 import laboImg from '../assets/img/labo-info.webp'
 import panoramaImg from '../assets/img/panorama-360.webp'
 import studioImg from '../assets/img/studio-montage.webp'
@@ -125,7 +125,6 @@ export default function Accueil() {
   const [mode, setMode] = useState<'vue' | 'fiche'>('vue')
   const [modalOpen, setModalOpen] = useState(false)
   const [slide, setSlide] = useState(0)
-  const [sent, setSent] = useState(false)
 
   const tour = TOURS.find((t) => t.id === tourId) ?? TOURS[0]
   const ordered = TESTIMONIALS.slice(slide).concat(TESTIMONIALS.slice(0, slide))
@@ -201,25 +200,16 @@ export default function Accueil() {
                   <div>
                     <h3 className="t-headline-md fw-700 c-primary">{p.name}</h3>
                     <span className={`chip ${p.badgeClass}`}>{p.badge}</span>
+                    <p className="t-body-sm c-muted measure mt-2">{p.description.split('.')[0]}.</p>
                   </div>
                 </div>
-                <ul className="module-list measure">
-                  {p.modules.map((m) => (
-                    <li key={m}>{m}</li>
-                  ))}
-                </ul>
                 <div className="track-foot">
-                  <span className="t-body-sm c-muted">Débouché : {p.debouche.split(',')[0]}</span>
+                  <span className="t-body-sm c-muted">Cycle de {p.months} mois</span>
                   <Link to={{ pathname: '/formations', hash: `#filiere-${p.id}` }}>Programme complet →</Link>
                 </div>
               </article>
             ))}
           </div>
-
-          <p className="t-body-sm c-muted measure mt-8">
-            Notre méthode : vous réalisez un book, un site en ligne ou une intervention réseau réelle, évalués par un
-            formateur agréé. Satisfaction des apprenants : 98%.
-          </p>
         </div>
       </section>
 
@@ -237,7 +227,7 @@ export default function Accueil() {
               <figure className="why-photo">
                 <img alt="Salle informatique équipée à la Mairie de Batié" src={laboImg} />
                 <figcaption className="why-photo__meta">
-                  Salle informatique équipée, accès libre de 08h00 à 17h00
+                  Salle informatique équipée, accès libre de 08h00 à 17h30
                 </figcaption>
               </figure>
             </div>
@@ -432,66 +422,20 @@ export default function Accueil() {
                   Rejoignez {SITE.foundation} et préparez votre avenir à Batié
                 </h2>
                 <p className="t-body-lg measure">
-                  Rentrée le {SITE.rentree}, salle multimédia de la Mairie de Batié — accueil dès 07h45 pour le contrôle
-                  des dossiers. Frais d’inscription, formation et support : pris en charge.
+                  Rentrée le {SITE.rentree}, salle multimédia de la Mairie de Batié. Frais d’inscription, formation et
+                  support : pris en charge.
                 </p>
               </div>
 
-              <div className="insc-form-panel">
-                <h3 className="t-headline-sm fw-700 c-primary">Pré-inscription rapide en ligne</h3>
-                <p className="t-body-sm c-muted">
-                  Laissez vos coordonnées : le secrétariat vous rappelle sous 48h pour compléter le dossier.
-                </p>
-                {sent ? (
-                  <div className="success-banner">
-                    <span className="material-symbols-outlined">task_alt</span>
-                    <span>
-                      Félicitations ! Votre demande a été enregistrée. L’équipe FNF vous contactera sous 48h.
-                    </span>
-                  </div>
-                ) : (
-                  <form
-                    className="form-stack"
-                    onSubmit={(e) => {
-                      e.preventDefault()
-                      setSent(true)
-                    }}
-                  >
-                    <div className="field">
-                      <label htmlFor="q-nom">Nom complet *</label>
-                      <input className="input" id="q-nom" name="nom" placeholder="Ex : Fotso Tagne Emmanuel" required />
-                    </div>
-                    <div className="form-grid-2">
-                      <div className="field">
-                        <label htmlFor="q-tel">Téléphone / WhatsApp *</label>
-                        <input className="input" id="q-tel" name="tel" placeholder="680270500" required type="tel" />
-                      </div>
-                      <div className="field">
-                        <label htmlFor="q-ville">Ville *</label>
-                        <input className="input" defaultValue="Batié" id="q-ville" name="ville" required />
-                      </div>
-                    </div>
-                    <div className="field">
-                      <label htmlFor="q-filiere">Filière souhaitée *</label>
-                      <select className="select" id="q-filiere" name="filiere" required>
-                        <option disabled selected value="">
-                          Sélectionnez votre domaine
-                        </option>
-                        <option value="bureautique">Bureautique &amp; Collaboratif (Word, Excel, PowerPoint)</option>
-                        <option value="infographie">Infographie &amp; Design (Photoshop, CorelDRAW, Canva)</option>
-                        <option value="montage">Montage Photo &amp; Vidéo (Premiere Pro, CapCut)</option>
-                        <option value="web">Développement Web (HTML, CSS, WordPress)</option>
-                        <option value="maintenance">Maintenance Informatique &amp; Réseaux</option>
-                      </select>
-                    </div>
-                    <button className="btn btn--red btn--block" type="submit">
-                      <span>Valider ma pré-inscription</span>
-                    </button>
-                    <p className="form-note">
-                      Pièces requises au démarrage : copie de la CNI ou acte de naissance et 2 photos 4x4.
-                    </p>
-                  </form>
-                )}
+              <div className="insc-band__left">
+                <Link className="btn btn--red btn--block btn--lg" to="/inscription">
+                  <span>S’inscrire à la {SITE.session}</span>
+                  <span className="material-symbols-outlined">arrow_forward</span>
+                </Link>
+                <a className="btn btn--white btn--block btn--lg" href={WHATSAPP_URL} rel="noreferrer" target="_blank">
+                  <span className="material-symbols-outlined">chat</span>
+                  <span>Poser une question sur WhatsApp</span>
+                </a>
               </div>
             </div>
           </div>
@@ -525,7 +469,7 @@ export default function Accueil() {
                 <a className="c-primary fw-700" href={`tel:${SITE.phoneRaw}`}>
                   {SITE.phoneShort}
                 </a>{' '}
-                — 08h00 à 17h00, du lundi au vendredi
+                — 08h00 à 17h30, du lundi au vendredi
               </dd>
             </div>
             <div>

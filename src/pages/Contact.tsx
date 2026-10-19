@@ -1,6 +1,5 @@
 import { useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
-import laboImg from '../assets/img/labo-info.webp'
 import { MAILTO_URL, MAPS_URL, SITE, WHATSAPP_URL } from '../lib/site'
 
 const SUBJECTS = [
@@ -150,7 +149,7 @@ export default function Contact() {
                 <p className="t-label c-outline up">Appel Téléphonique</p>
                 <p className="qa-phone c-primary">{SITE.phoneDisplay}</p>
                 <p className="t-body-sm c-muted">
-                  <span className="material-symbols-outlined">schedule</span> Lun — Ven : 08h00 - 17h00
+                  <span className="material-symbols-outlined">schedule</span> Lun — Ven : 08h00 - 17h30
                 </p>
               </div>
               <a className="qa-btn qa-btn--blue" href={`tel:${SITE.phoneRaw}`}>
@@ -312,7 +311,7 @@ export default function Contact() {
                       <span className="material-symbols-outlined">task_alt</span>
                       <span>
                         Message bien reçu ! Le secrétariat vous répond sous 24h ouvrées. Rappel : accueil physique du
-                        Lundi au Vendredi, 08h00 - 17h00, Mairie de Batié.
+                        Lundi au Vendredi, 08h00 - 17h30, Mairie de Batié.
                       </span>
                     </div>
                   )}
@@ -385,14 +384,6 @@ export default function Contact() {
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-
-          <div className="photo-band mt-8">
-            <img alt="Salles climatisées et connexion haut débit du campus FNF" src={laboImg} />
-            <div className="photo-band__overlay">
-              <span className="chip chip--gold">Salles Climatisées &amp; Connexion Haut Débit</span>
-              <p className="t-headline-sm fw-700 mt-4">Infrastructures Technologiques Modernes</p>
             </div>
           </div>
         </div>

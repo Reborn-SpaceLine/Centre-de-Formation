@@ -14,30 +14,6 @@ const COURSE_IMG: Record<string, string> = {
   maintenance: panoramaImg,
 }
 
-const INFRA = [
-  {
-    icon: 'devices',
-    tone: 'g-icon--fixed',
-    title: '1 Étudiant = 1 Ordinateur Haute Performance',
-    text: 'Chaque apprenant dispose de sa propre machine, équipée des licences professionnelles requises par la filière.',
-    points: ['Poste dédié toute la session', 'Sauvegarde personnelle sur le serveur du campus'],
-  },
-  {
-    icon: 'wifi',
-    tone: 'g-icon--redsoft',
-    title: 'Connexion Internet Haut Débit Permanente',
-    text: 'Fibre optique dédiée et relais mobile : téléchargement des assets, tests de sites en ligne et cloud.',
-    points: ['Cloud & dépôt de travaux', 'Séances de visioconférence avec les intervenants'],
-  },
-  {
-    icon: 'supervisor_account',
-    tone: 'g-icon--goldsoft',
-    title: 'Formateurs Experts & Encadrement de Proximité',
-    text: 'Des praticiens du terrain, déclarés auprès du MINEFOP, avec un ratio d’encadrement adapté aux ateliers.',
-    points: ['Suivi individuel de l’assiduité', 'Soutien supplémentaire le samedi matin'],
-  },
-]
-
 const FAQ = [
   {
     q: 'Les formations sont-elles vraiment 100% gratuites ?',
@@ -53,7 +29,7 @@ const FAQ = [
   },
   {
     q: 'Quelles pièces fournir pour la 8ème session ?',
-    a: 'Une copie de la CNI ou de l’acte de naissance, deux photos 4x4 et la fiche d’engagement dûment signée. Le dépôt se fait au secrétariat de la Mairie de Batié, du lundi au vendredi de 08h00 à 17h00.',
+    a: 'Une copie de la CNI ou de l’acte de naissance, deux photos 4x4 et la fiche d’engagement dûment signée. Le dépôt se fait au secrétariat de la Mairie de Batié, du lundi au vendredi de 08h00 à 17h30.',
   },
 ]
 
@@ -100,20 +76,6 @@ export default function Formations() {
                 {SITE.tagline} Cinq filières métiers du numérique enseignées à la Mairie de Batié, avec matériel
                 individuel, projets réels et accompagnement personnalisé jusqu’à l’insertion.
               </p>
-              <div className="assur-row">
-                <span className="assur-pill">
-                  <span className="material-symbols-outlined c-primary">verified_user</span>
-                  <span>Zéro Frais d’Inscription</span>
-                </span>
-                <span className="assur-pill">
-                  <span className="material-symbols-outlined c-primary">terminal</span>
-                  <span>Poste Individuel Équipé</span>
-                </span>
-                <span className="assur-pill">
-                  <span className="material-symbols-outlined c-primary">badge</span>
-                  <span>Diplôme Reconnu par l’État</span>
-                </span>
-              </div>
             </div>
 
             <aside className="metric-card">
@@ -259,45 +221,9 @@ export default function Formations() {
         </div>
       </section>
 
-      {/* Infrastructures */}
-      <section className="section bg-white" id="infrastructures">
-        <div className="container gap-grid gap-grid--2">
-          <div className="center">
-            <span className="chip chip--navy">
-              <span className="material-symbols-outlined">360</span>
-              <span>Infrastructures du Campus</span>
-            </span>
-            <h2 className="t-headline-md fw-700 c-primary mt-4">
-              Visite Virtuelle des Salles &amp; Moyens Techniques
-            </h2>
-            <p className="t-body-lg c-muted mt-2">
-              Trois principes intangibles : un poste par apprenant, des outils professionnels et un encadrement présent
-              chaque jour.
-            </p>
-          </div>
-
-          <div className="infra-grid">
-            {INFRA.map((i) => (
-              <div className="infra-card" key={i.title}>
-                <div>
-                  <span className={`infra-card__icon g-icon ${i.tone}`}>
-                    <span className="material-symbols-outlined">{i.icon}</span>
-                  </span>
-                  <h3 className="t-title fw-700 c-primary mt-4">{i.title}</h3>
-                  <p className="t-body-sm c-muted mt-2">{i.text}</p>
-                </div>
-                <ul className="module-list">
-                  {i.points.map((pt) => (
-                    <li key={pt}>
-                      <span className="material-symbols-outlined c-secondary">check_circle</span>
-                      <span>{pt}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-
+      {/* Visite sur site */}
+      <section className="section bg-white">
+        <div className="container">
           <div className="visit-bar visit-bar__grad">
             <div className="visit-bar__box">
               <span className="visit-bar__icon">
@@ -310,7 +236,7 @@ export default function Formations() {
                 </p>
               </div>
             </div>
-            <Link className="btn btn--red btn--sm" to="/contact">
+            <Link className="btn btn--red btn--sm" to={{ pathname: '/contact', hash: '#campus-batié' }}>
               <span>Organiser ma visite</span>
               <span className="material-symbols-outlined">arrow_forward</span>
             </Link>
@@ -430,44 +356,6 @@ export default function Formations() {
                 <span className="material-symbols-outlined">call</span>
                 <span>Appeler au {SITE.phoneShort}</span>
               </a>
-            </div>
-            <div className="push-stats">
-              <div className="stat">
-                <span className="stat__icon g-icon--fixed">
-                  <span className="material-symbols-outlined">redeem</span>
-                </span>
-                <div>
-                  <p className="t-headline-sm fw-800 c-primary">100%</p>
-                  <p className="t-body-sm c-muted">Pris en charge par la FNF</p>
-                </div>
-              </div>
-              <div className="stat">
-                <span className="stat__icon g-icon--redsoft">
-                  <span className="material-symbols-outlined">code_blocks</span>
-                </span>
-                <div>
-                  <p className="t-headline-sm fw-800 c-primary">80%</p>
-                  <p className="t-body-sm c-muted">De pratique sur machine</p>
-                </div>
-              </div>
-              <div className="stat">
-                <span className="stat__icon g-icon--goldsoft">
-                  <span className="material-symbols-outlined">verified</span>
-                </span>
-                <div>
-                  <p className="t-headline-sm fw-800 c-primary">MINEFOP</p>
-                  <p className="t-body-sm c-muted">Attestation agréée</p>
-                </div>
-              </div>
-              <div className="stat">
-                <span className="stat__icon g-icon--highest">
-                  <span className="material-symbols-outlined">location_on</span>
-                </span>
-                <div>
-                  <p className="t-headline-sm fw-800 c-primary">Batié</p>
-                  <p className="t-body-sm c-muted">Campus municipal de l’Ouest</p>
-                </div>
-              </div>
             </div>
           </div>
         </div>

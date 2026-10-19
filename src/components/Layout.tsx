@@ -167,7 +167,7 @@ export default function Layout() {
                 </li>
                 <li className="footer__contact-item">
                   <span className="material-symbols-outlined">schedule</span>
-                  <span>Lun — Ven : 08h00 - 17h00</span>
+                  <span>Lun — Ven : 08h00 - 17h30</span>
                 </li>
               </ul>
             </div>
