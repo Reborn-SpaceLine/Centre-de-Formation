@@ -458,29 +458,23 @@ export default function Accueil() {
             </Link>
           </div>
 
-          <div className="contact-lines row-divider">
-            <div>
-              <dt>Adresse</dt>
-              <dd>{SITE.location}</dd>
-            </div>
-            <div>
-              <dt>Téléphone &amp; WhatsApp</dt>
-              <dd>
-                <a className="c-primary fw-700" href={`tel:${SITE.phoneRaw}`}>
-                  {SITE.phoneShort}
-                </a>{' '}
-                — 08h00 à 17h30, du lundi au vendredi
-              </dd>
-            </div>
-            <div>
-              <dt>Courriel</dt>
-              <dd>
-                <a className="c-primary fw-700" href={`mailto:${SITE.email}`}>
-                  {SITE.email}
-                </a>
-              </dd>
-            </div>
-          </div>
+          <dl className="contact-lines">
+            <dt>Adresse</dt>
+            <dd>{SITE.location}</dd>
+            <dt>Téléphone &amp; WhatsApp</dt>
+            <dd>
+              <a className="c-primary fw-700" href={`tel:${SITE.phoneRaw}`}>
+                {SITE.phoneShort}
+              </a>{' '}
+              — 08h00 à 17h30, du lundi au vendredi
+            </dd>
+            <dt>Courriel</dt>
+            <dd>
+              <a className="c-primary fw-700" href={`mailto:${SITE.email}`}>
+                {SITE.email}
+              </a>
+            </dd>
+          </dl>
 
           <p className="slogan iu c-primary t-headline-sm">{SITE.slogan}</p>
         </div>

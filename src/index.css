@@ -48,7 +48,7 @@
   --inverse-surface: #283044;
   --inverse-on-surface: #eef0ff;
 
-  --outline: #757682;
+  --outline: #5b5c68;
   --outline-variant: #c5c5d3;
 
   --emerald: #047857;
@@ -427,6 +427,12 @@ textarea {
 .chip--wa { color: var(--emerald); }
 .chip--campus { color: var(--tertiary-container); }
 .chip--on-dark .dot { background: var(--tertiary-fixed-dim); }
+
+/* Contrastes sur fonds sombres */
+.cert-banner .chip--red,
+.cta-band .chip--red,
+.metric-card .chip--urg { color: #ffb4ab; }
+.footer .chip--surface { color: var(--inverse-on-surface); }
 
 .dot {
   display: inline-block;
@@ -3565,13 +3571,13 @@ main.sitelayout {
 
 .contact-lines {
   display: grid;
-  gap: 0;
+  gap: 0.25rem;
 }
 
-.contact-lines > div {
-  display: grid;
-  gap: 0.25rem;
-  padding-bottom: var(--cluster);
+.contact-lines dd + dt {
+  border-top: var(--rule);
+  margin-top: var(--cluster);
+  padding-top: var(--cluster);
 }
 
 .contact-lines dt {
