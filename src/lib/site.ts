@@ -22,6 +22,12 @@ export const WHATSAPP_URL =
 export const MAILTO_URL =
   'mailto:' + SITE.email + '?subject=' + encodeURIComponent('Demande d’information - 8ème Session IFP Multimédia FNF')
 
+export const whatsappLink = (text: string) =>
+  'https://wa.me/' + SITE.phoneRaw.slice(1) + '?text=' + encodeURIComponent(text)
+
+export const mailtoLink = (subject: string, body: string) =>
+  'mailto:' + SITE.email + '?subject=' + encodeURIComponent(subject) + '&body=' + encodeURIComponent(body)
+
 export const MAPS_URL = 'https://maps.google.com/?q=Mairie+de+Batie+Cameroun'
 
 export const NAV = [

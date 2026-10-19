@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { PROGRAMS } from '../data/programs'
-import { MAPS_URL, SITE } from '../lib/site'
+import { MAPS_URL, SITE, mailtoLink, whatsappLink } from '../lib/site'
 import laboImg from '../assets/img/labo-info.webp'
 import studioImg from '../assets/img/studio-montage.webp'
 
@@ -59,6 +59,21 @@ export default function Inscription() {
 
   const set = (key: keyof typeof form, value: string | boolean) => setForm((f) => ({ ...f, [key]: value }))
 
+  const filiere = PROGRAMS.find((p) => p.id === form.filiere) ?? PROGRAMS[0]
+
+  const dossierText = () =>
+    [
+      `CANDIDATURE ${SITE.session} — ${SITE.name}`,
+      `Nom : ${form.nom} ${form.prenom}`,
+      `Téléphone : ${form.tel}`,
+      `Email : ${form.email || '—'}`,
+      `Âge : ${form.age} — Niveau : ${form.niveau}`,
+      `Filière : ${filiere.name}`,
+      `Créneau : ${form.creneau === 'matin' ? 'Matin 08h30-12h30' : 'Après-midi 13h30-17h30'}`,
+      `Motivation : ${form.motivation}`,
+      `Projet professionnel : ${form.projet || '—'}`,
+    ].join('\n')
+
   const submit = (e: React.FormEvent) => {
     e.preventDefault()
     if (step < 4) {
@@ -74,9 +89,8 @@ export default function Inscription() {
     }
     setError('')
     setDone(true)
+    window.open(whatsappLink(dossierText()), '_blank', 'noopener')
   }
-
-  const filiere = PROGRAMS.find((p) => p.id === form.filiere) ?? PROGRAMS[0]
 
   return (
     <>
@@ -225,9 +239,27 @@ export default function Inscription() {
                   </span>
                   <h2 className="t-headline-md fw-800 c-primary">Pré-inscription Validée avec Succès !</h2>
                   <p className="t-body-lg c-muted">
-                    Votre candidature pour la filière {filiere.name} est enregistrée. Le secrétariat de la {SITE.session} vous
-                    contacte par SMS et WhatsApp sous 48h pour la confirmation du dossier.
+                    Dernière étape : envoyez votre candidature au secrétariat. WhatsApp s’est ouvert dans un nouvel
+                    onglet — il ne reste plus qu’à appuyer sur Envoyer. Pas de WhatsApp ? Utilisez l’email.
                   </p>
+                  <div className="flex-center" style={{ gap: '0.75rem', flexWrap: 'wrap' }}>
+                    <a
+                      className="btn btn--red"
+                      href={whatsappLink(dossierText())}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      <span className="material-symbols-outlined">chat</span>
+                      <span>Envoyer sur WhatsApp</span>
+                    </a>
+                    <a
+                      className="btn btn--soft"
+                      href={mailtoLink(`Candidature ${SITE.session} — ${form.nom} ${form.prenom}`, dossierText())}
+                    >
+                      <span className="material-symbols-outlined">mail</span>
+                      <span>Envoyer par email</span>
+                    </a>
+                  </div>
                   <div className="confirmation-recap">
                     <p className="t-label c-outline up">Rappel de Rendez-vous :</p>
                     <p>

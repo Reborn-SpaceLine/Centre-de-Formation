@@ -1,6 +1,6 @@
 import { useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { MAILTO_URL, MAPS_URL, SITE, WHATSAPP_URL } from '../lib/site'
+import { MAILTO_URL, MAPS_URL, SITE, WHATSAPP_URL, mailtoLink, whatsappLink } from '../lib/site'
 
 const SUBJECTS = [
   ['session8', 'Informations sur la 8ème session'],
@@ -76,7 +76,7 @@ const HOURS = [
 ]
 
 export default function Contact() {
-  const [sent, setSent] = useState(false)
+  const [sentText, setSentText] = useState('')
   const bannerRef = useRef<HTMLDivElement>(null)
 
   return (
@@ -239,8 +239,19 @@ export default function Contact() {
               <form
                 onSubmit={(e) => {
                   e.preventDefault()
-                  setSent(true)
+                  const fd = new FormData(e.currentTarget)
+                  const text = [
+                    `MESSAGE DEPUIS LE SITE — ${SITE.name}`,
+                    `Objet : ${fd.get('subject')}`,
+                    `Nom : ${fd.get('fullname')}`,
+                    `Téléphone : +237 ${fd.get('phone')}`,
+                    `Email : ${fd.get('email') || '—'}`,
+                    `Ville : ${fd.get('city')}`,
+                    `Message : ${fd.get('message')}`,
+                  ].join('\n')
+                  setSentText(text)
                   e.currentTarget.reset()
+                  window.open(whatsappLink(text), '_blank', 'noopener')
                   bannerRef.current?.scrollIntoView({ behavior: 'smooth', block: 'nearest' })
                 }}
               >
@@ -306,12 +317,19 @@ export default function Contact() {
                   <p className="t-label-sm c-outline center">
                     Vos coordonnées restent confidentielles et ne sont utilisées que pour traiter votre demande.
                   </p>
-                  {sent && (
+                  {sentText && (
                     <div className="success-banner" ref={bannerRef}>
                       <span className="material-symbols-outlined">task_alt</span>
                       <span>
-                        Message bien reçu ! Le secrétariat vous répond sous 24h ouvrées. Rappel : accueil physique du
-                        Lundi au Vendredi, 08h00 - 17h30, Mairie de Batié.
+                        Message prêt à l’envoi ! WhatsApp s’est ouvert dans un nouvel onglet — appuyez sur Envoyer.{' '}
+                        <a href={whatsappLink(sentText)} target="_blank" rel="noreferrer">
+                          Renvoyer sur WhatsApp
+                        </a>{' '}
+                        ou{' '}
+                        <a href={mailtoLink(`[Site] ${sentText.split('\n')[1]?.replace('Objet : ', '') ?? 'Demande'}`, sentText)}>
+                          envoyer par email
+                        </a>
+                        .
                       </span>
                     </div>
                   )}
